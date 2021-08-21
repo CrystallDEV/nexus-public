@@ -301,7 +301,7 @@ public class ExampleContentTestSupport
 
   protected static Matcher<AssetBlob> sameBlob(final AssetBlob expected) {
     return new FieldMatcher<>(expected, AssetBlob::blobRef, AssetBlob::blobSize, AssetBlob::contentType,
-        AssetBlob::blobCreated, AssetBlob::createdBy, AssetBlob::createdByIp);
+        AssetBlob::blobCreated);
   }
 
   protected static Matcher<Asset> sameLastDownloaded(final Asset expected) {

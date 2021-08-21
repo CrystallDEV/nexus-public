@@ -135,9 +135,6 @@ Ext.define('NX.coreui.view.component.ComponentAssetInfo', {
     computedInfo[NX.I18n.get('Assets_Info_BlobRef')] = Ext.htmlEncode(asset.get('blobRef'));
     computedInfo[NX.I18n.get('Assets_Info_ContainingRepositoryName')] = Ext.htmlEncode(asset.get('containingRepositoryName'));
 
-    computedInfo[NX.I18n.get('Assets_Info_UploadedBy')] = Ext.htmlEncode(asset.get('createdBy'));
-    computedInfo[NX.I18n.get('Assets_Info_UploadedIp')] = Ext.htmlEncode(asset.get('createdByIp'));
-
     if (attributesPanel) {
       attributesPanel.setAssetModel(asset);
     }

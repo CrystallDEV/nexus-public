@@ -57,14 +57,5 @@ public class ComponentDatabaseUpgrade_1_7
     withDatabaseAndClass(componentDatabaseInstance, BROWSE_NODE, (db, table) -> {
       db.getMetadata().getSchema().dropClass(BROWSE_NODE);
     });
-
-    withDatabaseAndClass(componentDatabaseInstance, ASSET, (db, table) -> {
-      if (!table.existsProperty(AssetEntityAdapter.P_CREATED_BY)) {
-        table.createProperty(AssetEntityAdapter.P_CREATED_BY, OType.STRING);
-      }
-      if (!table.existsProperty(AssetEntityAdapter.P_CREATED_BY_IP)) {
-        table.createProperty(AssetEntityAdapter.P_CREATED_BY_IP, OType.STRING);
-      }
-    });
   }
 }

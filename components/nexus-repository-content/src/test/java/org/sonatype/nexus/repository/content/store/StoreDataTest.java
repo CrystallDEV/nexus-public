@@ -46,8 +46,6 @@ public class StoreDataTest
     assetBlob.setContentType("some-contentType");
     assetBlob.setChecksums(Collections.singletonMap("some-algo", "some-checksum"));
     assetBlob.setBlobCreated(OffsetDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
-    assetBlob.setCreatedBy("some-user");
-    assetBlob.setCreatedByIp("some-ip-address");
     asset = new AssetData();
     asset.setAssetId(1);
     asset.setPath("/some-path");

@@ -36,13 +36,10 @@ import org.mockito.Mock;
 
 import static java.util.Collections.emptySet;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_IP_HEADER;
 import static org.sonatype.nexus.common.entity.EntityHelper.id;
 import static org.sonatype.nexus.repository.storage.MetadataNodeEntityAdapter.P_ATTRIBUTES;
 
@@ -120,8 +117,6 @@ public class RebuildAssetUploadMetadataTaskTest
 
     Asset updatedAsset = assetStore.getById(id(asset));
     assertThat(updatedAsset.name(), is(asset.name()));
-    assertThat(updatedAsset.createdBy(), is(blob.getHeaders().get(CREATED_BY_HEADER)));
-    assertThat(updatedAsset.createdByIp(), is(blob.getHeaders().get(CREATED_BY_IP_HEADER)));
     assertThat(updatedAsset.blobCreated(), is(blob.getMetrics().getCreationTime()));
   }
 
@@ -129,50 +124,23 @@ public class RebuildAssetUploadMetadataTaskTest
   public void executeSkipsAssetsWithANonEmptyCreatedBy() {
     Blob blob = createMockBlob("blobId");
     Asset asset = createAsset(blob);
-    asset.createdBy("somebody");
     assetStore.save(asset);
 
     task.execute();
 
     Asset updatedAsset = assetStore.getById(id(asset));
     assertThat(updatedAsset.name(), is(asset.name()));
-    assertThat(updatedAsset.createdBy(), is("somebody"));
-    assertThat(updatedAsset.createdByIp(), is(nullValue()));
   }
 
   @Test
   public void executeSkipsAssetsWithANoBlobRef() {
     Asset assetWithNoBlobRef = createAsset(null);
-    assetWithNoBlobRef.createdBy("somebody");
     assetStore.save(assetWithNoBlobRef);
 
     task.execute();
 
     Asset updatedAssetWithNoBlobRef = assetStore.getById(id(assetWithNoBlobRef));
     assertThat(updatedAssetWithNoBlobRef.name(), is(assetWithNoBlobRef.name()));
-    assertThat(updatedAssetWithNoBlobRef.createdBy(), is("somebody"));
-    assertThat(updatedAssetWithNoBlobRef.createdByIp(), is(nullValue()));
-  }
-
-  @Test
-  public void executeSkipsFirstAssetWithAnEmptyCreatedBy() {
-    Blob blob = createMockBlob("blobId");
-    when(blob.getHeaders()).thenReturn(Collections.singletonMap(CREATED_BY_IP_HEADER, "192.168.0.1"));
-    Asset asset = createAsset(blob);
-    asset.createdBy("alreadySet");
-    assetStore.save(asset);
-
-    Blob blob2 = createMockBlob("blobId2");
-    when(blob2.getHeaders()).thenReturn(Collections.singletonMap(CREATED_BY_IP_HEADER, "192.168.0.2"));
-    Asset asset2 = createAsset(blob2);
-    asset2.createdBy(null);
-    assetStore.save(asset2);
-
-
-    task.execute();
-
-    assertThat(assetStore.getById(id(asset)).createdByIp(), is(nullValue()));
-    assertThat(assetStore.getById(id(asset2)).createdByIp(), is(nullValue()));
   }
 
   private Asset createAsset(Blob blob) {
@@ -188,14 +156,10 @@ public class RebuildAssetUploadMetadataTaskTest
   }
 
   private Blob createMockBlob(String id) {
-    String createdBy = "createdBy";
-    String createdByIp = "createdByIp";
     DateTime creationTime = new DateTime();
     Blob blob = mock(Blob.class);
 
     Map<String, String> headers = new HashMap<>();
-    headers.put(CREATED_BY_HEADER, createdBy);
-    headers.put(CREATED_BY_IP_HEADER, createdByIp);
     when(blob.getHeaders()).thenReturn(headers);
 
     BlobMetrics metrics = new BlobMetrics(creationTime, "hash", 1L);

@@ -95,8 +95,6 @@ class OrientComponentHelper
           blobRef: asset.blobRef() ? asset.blobRef().toString() : '',
           componentId: asset.componentId() ? asset.componentId().value : '',
           attributes: asset.attributes().backing(),
-          createdBy: asset.createdBy(),
-          createdByIp: asset.createdByIp()
       )
   }
 

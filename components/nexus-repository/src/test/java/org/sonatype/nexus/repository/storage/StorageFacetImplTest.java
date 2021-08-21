@@ -244,9 +244,6 @@ public class StorageFacetImplTest
     when(payload.openInputStream()).thenAnswer(invocationOnMock -> new ByteArrayInputStream(contents));
     try (TempBlob tempBlob = underTest.createTempBlob(payload, singletonList(SHA1))) {
       verify(blobStore).create(any(InputStream.class), mapArgumentCaptor.capture());
-
-      assertThat(mapArgumentCaptor.getValue(), hasEntry(BlobStore.CREATED_BY_IP_HEADER, "10.1.1.1"));
-      assertThat(mapArgumentCaptor.getValue(), hasEntry(BlobStore.CREATED_BY_HEADER, "jpicard"));
     }
     verify(blobStore).asyncDelete(blobId);
   }

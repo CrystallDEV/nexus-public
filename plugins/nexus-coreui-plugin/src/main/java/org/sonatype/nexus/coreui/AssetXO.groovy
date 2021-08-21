@@ -57,10 +57,6 @@ class AssetXO {
 
   String componentId
 
-  String createdBy
-
-  String createdByIp
-
   @NotEmpty
   Map<String, Object> attributes
 }

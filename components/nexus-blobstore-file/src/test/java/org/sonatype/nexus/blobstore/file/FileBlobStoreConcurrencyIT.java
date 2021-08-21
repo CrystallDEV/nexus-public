@@ -61,7 +61,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_NAME_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_HEADER;
 
 /**
  * {@link FileBlobStore} concurrency tests.
@@ -70,7 +69,6 @@ public class FileBlobStoreConcurrencyIT
     extends TestSupport
 {
   public static final ImmutableMap<String, String> TEST_HEADERS = ImmutableMap.of(
-      CREATED_BY_HEADER, "test",
       BLOB_NAME_HEADER, "test/randomData.bin"
   );
 

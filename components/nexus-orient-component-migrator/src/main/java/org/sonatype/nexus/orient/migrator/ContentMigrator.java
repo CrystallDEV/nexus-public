@@ -231,13 +231,11 @@ public class ContentMigrator
         Date lastDownloaded = asset.field("last_downloaded", OType.DATETIME);
         Date blobCreated = asset.field("blob_created", OType.DATETIME);
         Date blobUpdated = asset.field("blob_updated", OType.DATETIME);
-        String createdBy =  asset.field("created_by", OType.STRING);
-        String createdByIp = asset.field("created_by_ip", OType.STRING);
 
         Integer assetBlobId = null;
         if (blobRef != null) {
           insert(assetBlobStatements.get(format), blobRef, size, contentType,
-              blobUpdated != null ? blobUpdated : blobCreated, createdBy, createdByIp);
+              blobUpdated != null ? blobUpdated : blobCreated);
 
           assetBlobId = blobCountsPerFormat.merge(format, 1, Integer::sum);
         }

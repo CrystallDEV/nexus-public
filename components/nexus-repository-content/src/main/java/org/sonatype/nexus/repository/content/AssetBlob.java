@@ -56,13 +56,4 @@ public interface AssetBlob
    */
   OffsetDateTime blobCreated();
 
-  /**
-   * The user that triggered creation of this blob; empty if it was an internal request.
-   */
-  Optional<String> createdBy();
-
-  /**
-   * The client IP that triggered creation of this blob; empty if it was an internal request.
-   */
-  Optional<String> createdByIp();
 }

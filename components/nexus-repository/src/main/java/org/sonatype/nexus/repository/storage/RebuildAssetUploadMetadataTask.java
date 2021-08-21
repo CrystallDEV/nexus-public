@@ -76,7 +76,7 @@ public class RebuildAssetUploadMetadataTask
     ProgressLogIntervalHelper progressLogger = new ProgressLogIntervalHelper(log, 60);
     List<Entry<OCompositeKey, EntityId>> assets = assetStore.getNextPage(assetCursor, limit);
 
-    if (!Iterables.isEmpty(assets) && !Strings2.isBlank(assetStore.getById(assets.get(0).getValue()).createdBy())) {
+    if (!Iterables.isEmpty(assets)) {
       return null;
     }
 
@@ -86,13 +86,10 @@ public class RebuildAssetUploadMetadataTask
       Iterable<EntityId> assetIds = assets.stream().map(Entry::getValue).collect(toList());
 
       Collection<Asset> assetsToUpdate = stream(assetStore.getByIds(assetIds))
-          .filter(asset -> Strings2.isEmpty(asset.createdBy()))
           .filter(asset -> asset.blobRef() != null).map(asset -> {
             BlobStore blobStore = blobStoreManager.get(asset.blobRef().getStore());
             Blob blob = blobStore.get(asset.blobRef().getBlobId());
             if (blob != null) {
-              asset.createdBy(blob.getHeaders().get(BlobStore.CREATED_BY_HEADER));
-              asset.createdByIp(blob.getHeaders().get(BlobStore.CREATED_BY_IP_HEADER));
               asset.blobCreated(blob.getMetrics().getCreationTime());
             }
 

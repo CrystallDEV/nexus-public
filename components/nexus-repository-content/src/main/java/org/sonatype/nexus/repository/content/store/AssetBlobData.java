@@ -23,7 +23,6 @@ import org.sonatype.nexus.common.entity.ContinuationAware;
 import org.sonatype.nexus.repository.content.AssetBlob;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.Optional.ofNullable;
 
 /**
  * {@link AssetBlob} data backed by the content data store.
@@ -44,12 +43,6 @@ public class AssetBlobData
   private Map<String, String> checksums;
 
   private OffsetDateTime blobCreated;
-
-  @Nullable
-  private String createdBy;
-
-  @Nullable
-  private String createdByIp;
 
   // AssetBlob API
 
@@ -76,16 +69,6 @@ public class AssetBlobData
   @Override
   public OffsetDateTime blobCreated() {
     return blobCreated;
-  }
-
-  @Override
-  public Optional<String> createdBy() {
-    return ofNullable(createdBy);
-  }
-
-  @Override
-  public Optional<String> createdByIp() {
-    return ofNullable(createdByIp);
   }
 
   // MyBatis setters + validation
@@ -134,20 +117,6 @@ public class AssetBlobData
     this.blobCreated = checkNotNull(blobCreated);
   }
 
-  /**
-   * Sets the user that triggered creation of this blob.
-   */
-  public void setCreatedBy(@Nullable final String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  /**
-   * Sets the client IP that triggered creation of this blob.
-   */
-  public void setCreatedByIp(@Nullable final String createdByIp) {
-    this.createdByIp = createdByIp;
-  }
-
   // ContinuationAware
 
   @Override
@@ -164,8 +133,6 @@ public class AssetBlobData
         ", contentType='" + contentType + '\'' +
         ", checksums=" + checksums +
         ", blobCreated=" + blobCreated +
-        ", createdBy='" + createdBy + '\'' +
-        ", createdByIp='" + createdByIp + '\'' +
         '}';
   }
 }

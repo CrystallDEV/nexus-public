@@ -263,10 +263,6 @@ public class DatastoreBlobstoreRestoreTestHelper
 
     assertThat(asset.map(FluentAsset::path).orElse("MISSING_FLUENT_ASSET"),
         equalTo(blob.getHeaders().get(BlobStore.BLOB_NAME_HEADER)));
-    assertThat(assetBlob.createdBy().orElse("MISSING_ASSET_BLOB"),
-        equalTo(blob.getHeaders().get(BlobStore.CREATED_BY_HEADER)));
-    assertThat(assetBlob.createdByIp().orElse("MISSING_CREATED_BY"),
-        equalTo(blob.getHeaders().get(BlobStore.CREATED_BY_IP_HEADER)));
     assertThat(assetBlob.contentType(), equalTo(blob.getHeaders().get(BlobStore.CONTENT_TYPE_HEADER)));
     assertThat(assetBlob.checksums().get(SHA1.name()), equalTo(blob.getMetrics().getSha1Hash()));
     assertThat(assetBlob.blobSize(), equalTo(blob.getMetrics().getContentSize()));

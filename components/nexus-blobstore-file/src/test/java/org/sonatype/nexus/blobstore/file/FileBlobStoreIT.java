@@ -79,7 +79,6 @@ import static org.sonatype.nexus.blobstore.DefaultBlobIdLocationResolver.TEMPORA
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_FILE_ATTRIBUTES_SUFFIX;
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_FILE_CONTENT_SUFFIX;
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_NAME_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.DIRECT_PATH_BLOB_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.TEMPORARY_BLOB_HEADER;
 
@@ -96,12 +95,10 @@ public class FileBlobStoreIT
   private static final int QUOTA_CHECK_INTERVAL = 5;
 
   public static final ImmutableMap<String, String> TEST_HEADERS = ImmutableMap.of(
-      CREATED_BY_HEADER, "test",
       BLOB_NAME_HEADER, "test/randomData.bin"
   );
 
   public static final ImmutableMap<String, String> TEMP_HEADERS = ImmutableMap.of(
-      CREATED_BY_HEADER, "test",
       BLOB_NAME_HEADER, "test/randomData.bin",
       TEMPORARY_BLOB_HEADER, ""
   );
@@ -215,7 +212,6 @@ public class FileBlobStoreIT
     new Random().nextBytes(content);
 
     final Blob blob = underTest.create(new ByteArrayInputStream(content), ImmutableMap.of(
-        CREATED_BY_HEADER, "test",
         BLOB_NAME_HEADER, "health-check/repositoryName/bundle.gz",
         DIRECT_PATH_BLOB_HEADER, "true"
     ));
@@ -250,7 +246,6 @@ public class FileBlobStoreIT
   public void testExistsMethodForDirectPathBlob() {
     byte[] content = "hello".getBytes();
     final ImmutableMap<String, String> DIRECT_PATH_HEADERS = ImmutableMap.of(
-        CREATED_BY_HEADER, "test",
         BLOB_NAME_HEADER, "health-check/repositoryName/file.txt",
         DIRECT_PATH_BLOB_HEADER, "true"
     );
@@ -268,7 +263,6 @@ public class FileBlobStoreIT
   public void getDirectPathBlobIdStreamSuccess() throws IOException {
     byte[] content = "hello".getBytes();
     Blob blob = underTest.create(new ByteArrayInputStream(content), ImmutableMap.of(
-        CREATED_BY_HEADER, "test",
         BLOB_NAME_HEADER, "health-check/repositoryName/file.txt",
         DIRECT_PATH_BLOB_HEADER, "true"
     ));
@@ -293,11 +287,10 @@ public class FileBlobStoreIT
   public void itWillReturnAllBlobIdsInTheStream() {
     byte[] content = "hello".getBytes();
     Blob regularBlob = underTest.create(new ByteArrayInputStream(content), ImmutableMap.of(
-        BLOB_NAME_HEADER, "example",
-        CREATED_BY_HEADER, "test"));
+        BLOB_NAME_HEADER, "example"
+    ));
 
     Blob directPathBlob = underTest.create(new ByteArrayInputStream(content), ImmutableMap.of(
-        CREATED_BY_HEADER, "test",
         BLOB_NAME_HEADER, "health-check/repositoryName/file.txt",
         DIRECT_PATH_BLOB_HEADER, "true"
     ));
@@ -316,7 +309,6 @@ public class FileBlobStoreIT
   public void overwriteDirectPathBlobSuccessful() throws IOException {
     byte[] content = "hello".getBytes();
     Blob blob = underTest.create(new ByteArrayInputStream(content), ImmutableMap.of(
-        CREATED_BY_HEADER, "test",
         BLOB_NAME_HEADER, "health-check/repositoryName/file.txt",
         DIRECT_PATH_BLOB_HEADER, "true"
     ));
@@ -336,7 +328,6 @@ public class FileBlobStoreIT
     // now overwrite the blob
     content = "goodbye".getBytes();
     blob = underTest.create(new ByteArrayInputStream(content), ImmutableMap.of(
-        CREATED_BY_HEADER, "test",
         BLOB_NAME_HEADER, "health-check/repositoryName/file.txt",
         DIRECT_PATH_BLOB_HEADER, "true"
     ));

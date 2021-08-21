@@ -76,10 +76,6 @@ public class Asset
 
   private DateTime blobUpdated;
 
-  private String createdBy;
-
-  private String createdByIp;
-
   /**
    * Gets the component's {@link EntityId} this asset is part of, or {@code null} if it's standalone.
    */
@@ -116,46 +112,6 @@ public class Asset
    */
   public Asset size(@Nullable final Long size) {
     this.size = size;
-    return this;
-  }
-
-  /**
-   * Gets the user used to create this
-   *
-   * @since 3.6.1
-   */
-  @Nullable
-  public String createdBy() {
-    return createdBy;
-  }
-
-  /**
-   * Gets the ip address used to create this
-   *
-   * @since 3.6.1
-   */
-  @Nullable
-  public String createdByIp() {
-    return createdByIp;
-  }
-
-  /**
-   * Sets the user used to create this
-   *
-   * @since 3.6.1
-   */
-  public Asset createdBy(@Nullable final String createdBy) {
-    this.createdBy = createdBy;
-    return this;
-  }
-
-  /**
-   * Sets the IP address used to create this
-   *
-   * @since 3.6.1
-   */
-  public Asset createdByIp(@Nullable final String createdByIp) {
-    this.createdByIp = createdByIp;
     return this;
   }
 

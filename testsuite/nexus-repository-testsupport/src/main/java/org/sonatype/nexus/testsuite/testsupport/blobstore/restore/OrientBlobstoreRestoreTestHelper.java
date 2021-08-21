@@ -178,8 +178,6 @@ public class OrientBlobstoreRestoreTestHelper
 
       assertThat(repository.getName(), equalTo(blob.getHeaders().get(BlobStore.REPO_NAME_HEADER)));
       assertThat(asset.name(), equalTo(blob.getHeaders().get(BlobStore.BLOB_NAME_HEADER)));
-      assertThat(asset.createdBy(), equalTo(blob.getHeaders().get(BlobStore.CREATED_BY_HEADER)));
-      assertThat(asset.createdByIp(), equalTo(blob.getHeaders().get(BlobStore.CREATED_BY_IP_HEADER)));
       assertThat(asset.contentType(), equalTo(blob.getHeaders().get(BlobStore.CONTENT_TYPE_HEADER)));
       assertThat(asset.attributes().child("checksum").get("sha1"), equalTo(blob.getMetrics().getSha1Hash()));
       assertThat(asset.size(), equalTo(blob.getMetrics().getContentSize()));
@@ -254,8 +252,6 @@ public class OrientBlobstoreRestoreTestHelper
 
         assertThat(repository.getName(), equalTo(blob.getHeaders().get(BlobStore.REPO_NAME_HEADER)));
         assertThat(asset.name(), equalTo(blob.getHeaders().get(BlobStore.BLOB_NAME_HEADER)));
-        assertThat(asset.createdBy(), equalTo(blob.getHeaders().get(BlobStore.CREATED_BY_HEADER)));
-        assertThat(asset.createdByIp(), equalTo(blob.getHeaders().get(BlobStore.CREATED_BY_IP_HEADER)));
         assertThat(asset.contentType(), equalTo(blob.getHeaders().get(BlobStore.CONTENT_TYPE_HEADER)));
         assertThat(asset.attributes().child("checksum").get("sha1"), equalTo(blob.getMetrics().getSha1Hash()));
         assertThat(asset.size(), equalTo(blob.getMetrics().getContentSize()));

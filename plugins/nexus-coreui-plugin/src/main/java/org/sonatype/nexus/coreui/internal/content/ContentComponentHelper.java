@@ -333,8 +333,6 @@ public class ContentComponentHelper
       assetXO.setContentType(blob.contentType());
       assetXO.setBlobUpdated(Date.from(blob.blobCreated().toInstant()));
       attributes.put("checksum", blob.checksums());
-      assetXO.setCreatedBy(blob.createdBy().orElse(null));
-      assetXO.setCreatedByIp(blob.createdByIp().orElse(null));
     });
 
     assetXO.setAttributes((Map) attributes);

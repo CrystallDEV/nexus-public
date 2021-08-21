@@ -91,10 +91,6 @@ public class StorageTxImpl
 {
   private static final Logger log = LoggerFactory.getLogger(StorageTxImpl.class);
 
-  private final String createdBy;
-
-  private final String createdByIp;
-
   private final BlobTx blobTx;
 
   private final ODatabaseDocumentTx db;
@@ -129,8 +125,7 @@ public class StorageTxImpl
 
   private String reason = DEFAULT_REASON;
 
-  public StorageTxImpl(final String createdBy,
-                       final String createdByIp,
+  public StorageTxImpl(
                        final BlobTx blobTx,
                        final ODatabaseDocumentTx db,
                        final String repositoryName,
@@ -146,8 +141,6 @@ public class StorageTxImpl
                        final Provider<RepositoryMoveService> repositoryMoveStoreProvider,
                        final NodeAccess nodeAccess)
   {
-    this.createdBy = checkNotNull(createdBy);
-    this.createdByIp = checkNotNull(createdByIp);
     this.blobTx = checkNotNull(blobTx);
     this.db = checkNotNull(db);
     this.repositoryName = checkNotNull(repositoryName);
@@ -764,8 +757,6 @@ public class StorageTxImpl
     Builder<String, String> storageHeaders = ImmutableMap.builder();
     storageHeaders.put(BlobStore.REPO_NAME_HEADER, repositoryName);
     storageHeaders.put(BlobStore.BLOB_NAME_HEADER, blobName);
-    storageHeaders.put(BlobStore.CREATED_BY_HEADER, createdBy);
-    storageHeaders.put(BlobStore.CREATED_BY_IP_HEADER, createdByIp);
     if (!skipContentVerification) {
       storageHeaders.put(
           BlobStore.CONTENT_TYPE_HEADER,
@@ -815,13 +806,6 @@ public class StorageTxImpl
       provenance.set(HASHES_NOT_VERIFIED, !assetBlob.getHashesVerified());
 
       Map<String, String> blobHeaders = assetBlob.getBlob().getHeaders();
-      if (blobHeaders.containsKey(BlobStore.CREATED_BY_HEADER)) {
-        asset.createdBy(blobHeaders.get(BlobStore.CREATED_BY_HEADER));
-      }
-      if (blobHeaders.containsKey(BlobStore.CREATED_BY_IP_HEADER)) {
-        asset.createdByIp(blobHeaders.get(BlobStore.CREATED_BY_IP_HEADER));
-      }
-
       assetBlob.setAttached(true);
     }
 

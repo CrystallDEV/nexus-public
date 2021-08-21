@@ -37,8 +37,6 @@ Ext.define('NX.coreui.model.Asset', {
     {name: 'downloadCount', type: 'int'},
     {name: 'blobRef', type: 'string', sortType: 'asUCText'},
     {name: 'componentId', type: 'string', sortType: 'asUCText'},
-    {name: 'createdBy', type: 'string'},
-    {name: 'createdByIp', type: 'string', sortType: 'asUCText'},
     {name: 'attributes', type: 'auto' /*object*/}
   ]
 });

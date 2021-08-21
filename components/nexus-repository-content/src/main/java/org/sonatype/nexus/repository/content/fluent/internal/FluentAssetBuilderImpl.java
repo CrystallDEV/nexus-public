@@ -47,8 +47,6 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_NAME_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.CONTENT_TYPE_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_IP_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.REPO_NAME_HEADER;
 import static org.sonatype.nexus.common.time.DateHelper.toOffsetDateTime;
 
@@ -206,8 +204,6 @@ public class FluentAssetBuilderImpl
     Map<String, String> tempHeaders = tempBlob.getHeaders();
     headerBuilder.put(REPO_NAME_HEADER, tempHeaders.get(REPO_NAME_HEADER));
     headerBuilder.put(BLOB_NAME_HEADER, assetData.path());
-    headerBuilder.put(CREATED_BY_HEADER, tempHeaders.get(CREATED_BY_HEADER));
-    headerBuilder.put(CREATED_BY_IP_HEADER, tempHeaders.get(CREATED_BY_IP_HEADER));
     headerBuilder.put(CONTENT_TYPE_HEADER, facet.checkContentType(assetData, tempBlob));
 
     Blob permanentBlob = facet.stores().blobStore.copy(tempBlob.getId(), headerBuilder.build());
@@ -241,8 +237,6 @@ public class FluentAssetBuilderImpl
             e -> e.getValue().toString())));
 
     assetBlob.setBlobCreated(toOffsetDateTime(metrics.getCreationTime()));
-    assetBlob.setCreatedBy(headers.get(CREATED_BY_HEADER));
-    assetBlob.setCreatedByIp(headers.get(CREATED_BY_IP_HEADER));
 
     facet.stores().assetBlobStore.createAssetBlob(assetBlob);
 

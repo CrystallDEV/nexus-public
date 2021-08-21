@@ -43,6 +43,10 @@
       <artifactId>nexus-testsupport</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

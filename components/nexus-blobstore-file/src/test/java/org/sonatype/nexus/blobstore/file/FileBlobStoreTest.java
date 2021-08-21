@@ -72,7 +72,6 @@ import static org.mockito.Mockito.when;
 import static org.sonatype.nexus.blobstore.DirectPathLocationStrategy.DIRECT_PATH_ROOT;
 import static org.sonatype.nexus.blobstore.api.BlobAttributesConstants.HEADER_PREFIX;
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_NAME_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_HEADER;
 
 /**
  * Tests {@link FileBlobStore}.
@@ -123,7 +122,6 @@ public class FileBlobStoreTest
   BlobStoreReconciliationLogger reconciliationLogger;
 
   public static final ImmutableMap<String, String> TEST_HEADERS = ImmutableMap.of(
-      CREATED_BY_HEADER, "test",
       BLOB_NAME_HEADER, "test/randomData.bin"
   );
 

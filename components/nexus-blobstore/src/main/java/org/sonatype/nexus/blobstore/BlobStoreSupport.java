@@ -117,7 +117,6 @@ public abstract class BlobStoreSupport<T extends AttributesLocation>
     checkIsWritable();
 
     checkArgument(headers.containsKey(BLOB_NAME_HEADER), "Missing header: %s", BLOB_NAME_HEADER);
-    checkArgument(headers.containsKey(CREATED_BY_HEADER), "Missing header: %s", CREATED_BY_HEADER);
 
     long start = System.nanoTime();
     Blob blob = null;

@@ -42,8 +42,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Optional.ofNullable;
 import static org.sonatype.nexus.blobstore.api.BlobStore.BLOB_NAME_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.CONTENT_TYPE_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_HEADER;
-import static org.sonatype.nexus.blobstore.api.BlobStore.CREATED_BY_IP_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.REPO_NAME_HEADER;
 import static org.sonatype.nexus.blobstore.api.BlobStore.TEMPORARY_BLOB_HEADER;
 import static org.sonatype.nexus.repository.view.ContentTypes.APPLICATION_OCTET_STREAM;
@@ -83,8 +81,6 @@ public class FluentBlobsImpl
     tempHeaders.put(TEMPORARY_BLOB_HEADER, "");
     tempHeaders.put(REPO_NAME_HEADER, facet.repository().getName());
     tempHeaders.put(BLOB_NAME_HEADER, "temp");
-    tempHeaders.put(CREATED_BY_HEADER, clientInfo.map(ClientInfo::getUserid).orElse(SYSTEM));
-    tempHeaders.put(CREATED_BY_IP_HEADER, clientInfo.map(ClientInfo::getRemoteIP).orElse(SYSTEM));
     tempHeaders.put(CONTENT_TYPE_HEADER, ofNullable(contentType).orElse(APPLICATION_OCTET_STREAM));
 
     MultiHashingInputStream hashingStream = new MultiHashingInputStream(hashing, in);
@@ -139,8 +135,6 @@ public class FluentBlobsImpl
     newHeaders.putAll(headers);
     // maybe add additional headers
     maybePut(newHeaders, headers, REPO_NAME_HEADER, facet.repository().getName());
-    maybePut(newHeaders, headers, CREATED_BY_HEADER, clientInfo.map(ClientInfo::getUserid).orElse(SYSTEM));
-    maybePut(newHeaders, headers, CREATED_BY_IP_HEADER, clientInfo.map(ClientInfo::getRemoteIP).orElse(SYSTEM));
 
     return blobStore.create(sourceFile, newHeaders.build(), size, sha1);
   }
